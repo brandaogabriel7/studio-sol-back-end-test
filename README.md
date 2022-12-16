@@ -29,3 +29,9 @@ Meu primeiro passo foi criar o projeto usando o [gqlgen](https://github.com/99de
 Depois que o projeto foi gerado, parti para a criação da `Dockerfile`.
 
 Por último, com o projeto criado e a `Dockerfile` pronta, criei o pipeline com *Github Actions* para automatizar o deploy da aplicação.
+
+Quando a aplicação já estava funcionando no Heroku e o pipeline estava configurado, eu adicionei um domínio customizado usando o **Cloudflare**.
+
+As rotas ficaram:
+- Playground: https://studio-sol-back-end-test.gabrielbrandao.net
+- Endpoint GraphQL: https://studio-sol-back-end-test.gabrielbrandao.net/graphql
