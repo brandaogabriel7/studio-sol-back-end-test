@@ -12,6 +12,4 @@ FROM scratch
 
 COPY --from=builder /go/bin/studio-sol-back-end-test /go/bin/studio-sol-back-end-test
 
-CMD ["/go/bin/studio-sol-back-end-test"]
-
-EXPOSE 8080
+ENTRYPOINT ["/go/bin/studio-sol-back-end-test"]
