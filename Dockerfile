@@ -12,4 +12,6 @@ FROM scratch
 
 COPY --from=builder /go/bin/studio-sol-back-end-test /go/bin/studio-sol-back-end-test
 
+# changed from CMD to ENTRYPOINT to make it work in heroku
+# see this: https://devcenter.heroku.com/articles/container-registry-and-runtime#dockerfile-commands-and-runtime
 ENTRYPOINT ["/go/bin/studio-sol-back-end-test"]
