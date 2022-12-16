@@ -4,6 +4,8 @@ RUN apk update && apk add --no-cache git
 WORKDIR $GOPATH/src/mypackage/myapp/
 COPY . .
 
+WORKDIR $GOPATH/src/mypackage/myapp/cmd/server
+
 RUN go get -d -v
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o /go/bin/studio-sol-back-end-test
