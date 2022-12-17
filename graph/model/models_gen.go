@@ -8,6 +8,6 @@ type Rule struct {
 }
 
 type Verify struct {
-	Verify  bool      `json:"verify"`
-	NoMatch []*string `json:"noMatch"`
+	Verify  bool     `json:"verify"`
+	NoMatch []string `json:"noMatch"`
 }

@@ -202,7 +202,7 @@ func (ec *executionContext) field_Query_verify_args(ctx context.Context, rawArgs
 	var arg1 []*model.Rule
 	if tmp, ok := rawArgs["rules"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("rules"))
-		arg1, err = ec.unmarshalORule2ᚕᚖgithubᚗcomᚋbrandaogabriel7ᚋstudioᚑsolᚑbackᚑendᚑtestᚋgraphᚋmodelᚐRule(ctx, tmp)
+		arg1, err = ec.unmarshalNRule2ᚕᚖgithubᚗcomᚋbrandaogabriel7ᚋstudioᚑsolᚑbackᚑendᚑtestᚋgraphᚋmodelᚐRuleᚄ(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -509,9 +509,9 @@ func (ec *executionContext) _Verify_noMatch(ctx context.Context, field graphql.C
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*string)
+	res := resTmp.([]string)
 	fc.Result = res
-	return ec.marshalNString2ᚕᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2ᚕstringᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Verify_noMatch(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2777,6 +2777,28 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
+func (ec *executionContext) unmarshalNRule2ᚕᚖgithubᚗcomᚋbrandaogabriel7ᚋstudioᚑsolᚑbackᚑendᚑtestᚋgraphᚋmodelᚐRuleᚄ(ctx context.Context, v interface{}) ([]*model.Rule, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]*model.Rule, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNRule2ᚖgithubᚗcomᚋbrandaogabriel7ᚋstudioᚑsolᚑbackᚑendᚑtestᚋgraphᚋmodelᚐRule(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) unmarshalNRule2ᚖgithubᚗcomᚋbrandaogabriel7ᚋstudioᚑsolᚑbackᚑendᚑtestᚋgraphᚋmodelᚐRule(ctx context.Context, v interface{}) (*model.Rule, error) {
+	res, err := ec.unmarshalInputRule(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) unmarshalNString2string(ctx context.Context, v interface{}) (string, error) {
 	res, err := graphql.UnmarshalString(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -2792,16 +2814,16 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 	return res
 }
 
-func (ec *executionContext) unmarshalNString2ᚕᚖstring(ctx context.Context, v interface{}) ([]*string, error) {
+func (ec *executionContext) unmarshalNString2ᚕstringᚄ(ctx context.Context, v interface{}) ([]string, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]*string, len(vSlice))
+	res := make([]string, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalOString2ᚖstring(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNString2string(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -2809,10 +2831,16 @@ func (ec *executionContext) unmarshalNString2ᚕᚖstring(ctx context.Context, v
 	return res, nil
 }
 
-func (ec *executionContext) marshalNString2ᚕᚖstring(ctx context.Context, sel ast.SelectionSet, v []*string) graphql.Marshaler {
+func (ec *executionContext) marshalNString2ᚕstringᚄ(ctx context.Context, sel ast.SelectionSet, v []string) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	for i := range v {
-		ret[i] = ec.marshalOString2ᚖstring(ctx, sel, v[i])
+		ret[i] = ec.marshalNString2string(ctx, sel, v[i])
+	}
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
 	}
 
 	return ret
@@ -3125,34 +3153,6 @@ func (ec *executionContext) marshalOInt2ᚖint(ctx context.Context, sel ast.Sele
 	}
 	res := graphql.MarshalInt(*v)
 	return res
-}
-
-func (ec *executionContext) unmarshalORule2ᚕᚖgithubᚗcomᚋbrandaogabriel7ᚋstudioᚑsolᚑbackᚑendᚑtestᚋgraphᚋmodelᚐRule(ctx context.Context, v interface{}) ([]*model.Rule, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]*model.Rule, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalORule2ᚖgithubᚗcomᚋbrandaogabriel7ᚋstudioᚑsolᚑbackᚑendᚑtestᚋgraphᚋmodelᚐRule(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) unmarshalORule2ᚖgithubᚗcomᚋbrandaogabriel7ᚋstudioᚑsolᚑbackᚑendᚑtestᚋgraphᚋmodelᚐRule(ctx context.Context, v interface{}) (*model.Rule, error) {
-	if v == nil {
-		return nil, nil
-	}
-	res, err := ec.unmarshalInputRule(ctx, v)
-	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalOString2ᚖstring(ctx context.Context, v interface{}) (*string, error) {
