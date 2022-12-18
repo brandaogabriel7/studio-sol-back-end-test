@@ -93,3 +93,9 @@ Essa validação consiste em retornar **inválido** para senhas *menores* que o 
 As validações de `minDigit` e `minSpecialChars` são relativamente simples, também. As duas podem ser resolvidas facilmente usando **Regex**. Comecei pela de dígitos porque a expressão regular é mais simples.
 
 A validação consiste em encontrar todos as ocorrências de um dígito numérico dentro da senha, retornar *inválido* se o número de ocorrências for *menor* que o valor `minDigit` ou retornar *válido* se o número de ocorrências for *maior* ou igual ao valor `minDigit`.
+
+A expressão regular é: `\d`
+
+### MinSpecialChars
+
+A lógica do `minSpecialChars` é a mesma do minDigit, mas a expressão regular é: `[!@#$%^&*()\-+\\\/{}\[\]]`
