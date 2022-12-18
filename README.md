@@ -80,10 +80,10 @@ Uma das minhas primeiras ideias para implementação das validações era usar o
 
 A segunda opção me pareceu mais simples, além de me permitir retornar as regras que não fossem cumpridas na mesma ordem que elas viesse na requisição.
 
-### MinDigitValidationStrategy
+### MinSizeValidationStrategy
 
 Tendo decidido que usaria o ***Strategy Pattern***, comecei a implementar os strategies, um por um, sempre seguindo o ciclo do TDD.
 
-Iniciei pela validação que me pareceu mais simples, a `minDigit`.
+Iniciei pela validação que me pareceu mais simples, a `minSize`.
 
-Essa validação consiste em retornar **inválido** para senhas *menores* que o valor fornecido para o `minDigit` e retornar **válido** para senhas *maiores* ou de tamanho *igual* ao valor fornecido para `minDigit`.
+Essa validação consiste em retornar **inválido** para senhas *menores* que o valor fornecido para o `minSize` e retornar **válido** para senhas *maiores* ou de tamanho *igual* ao valor fornecido para `minSize`.
