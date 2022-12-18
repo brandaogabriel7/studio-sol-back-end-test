@@ -20,8 +20,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          go get . \
-          && go mod tidy \
+          go get -t . \
           && go install github.com/onsi/ginkgo/v2/ginkgo \
           && go get github.com/onsi/gomega/...
 
