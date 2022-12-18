@@ -19,19 +19,16 @@ jobs:
           go-version: '1.19'
 
       - name: Install dependencies
-        run: go mod tidy
+        run: |
+          go get .
+          go install github.com/onsi/ginkgo/v2/ginkgo
+          go get github.com/onsi/gomega/...
 
       - name: Build
         run: go build -v ./...
 
-      - name: echo gobin
-        run: echo $(go env GOPATH)/bin
-
-      - name: Install ginkgo CLI and gomega
-        run: go get github.com/onsi/ginkgo/v2/ginkgo && go get github.com/onsi/gomega/...
-
       - name: Run tests with ginkgo CLI
-        run: $(go env GOPATH)/bin/ginkgo ./...
+        run: ginkgo -v ./...
 
   deploy:
     runs-on: ubuntu-latest
