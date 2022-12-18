@@ -27,6 +27,9 @@ jobs:
       - name: go env
         run: go env
 
+      - name: ls gobin
+        run: ls $(go env GOPATH)/bin
+
       - name: Install ginkgo CLI and gomega
         run: go get github.com/onsi/ginkgo/v2/ginkgo && go get github.com/onsi/gomega/...
 
