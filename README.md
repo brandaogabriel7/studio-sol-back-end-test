@@ -35,3 +35,25 @@ Quando a aplicação já estava funcionando no Heroku e o pipeline estava config
 As rotas ficaram:
 - Playground: https://studio-sol-back-end-test.gabrielbrandao.net
 - Endpoint GraphQL: https://studio-sol-back-end-test.gabrielbrandao.net/graphql
+
+## Criar schema da aplicação
+
+O próximo passo foi editar o arquivo `schema.graphqls` para configurar a query `verify` e seus tipos. Depois, o script `generate` da **gqlgen** atualizou os códigos com base no novo esquema graphql.
+
+O schema ficou assim:
+```gql
+type Verify {
+  verify: Boolean!
+  noMatch: [String!]!
+}
+
+input Rule {
+  rule: String!
+  value: Int
+}
+
+type Query {
+  verify(password: String!, rules: [Rule!]!): Verify!
+}
+```
+

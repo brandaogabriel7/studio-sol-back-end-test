@@ -24,8 +24,8 @@ jobs:
       - name: Build
         run: go build -v ./...
 
-      - name: Test with the Go CLI
-        run: go test ./...
+      - name: Run tests with ginkgo CLI
+        run: $(go env GOPATH)/bin/ginkgo ./...
 
   deploy:
     runs-on: ubuntu-latest
