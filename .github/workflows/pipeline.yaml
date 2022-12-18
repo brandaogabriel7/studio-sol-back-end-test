@@ -24,6 +24,9 @@ jobs:
       - name: Build
         run: go build -v ./...
 
+      - name: Install ginkgo CLI and gomega
+        run: go get github.com/onsi/ginkgo/v2/ginkgo && go get github.com/onsi/gomega/...
+
       - name: Run tests with ginkgo CLI
         run: $(go env GOPATH)/bin/ginkgo ./...
 
