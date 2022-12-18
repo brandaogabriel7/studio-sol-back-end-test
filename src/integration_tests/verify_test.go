@@ -39,7 +39,7 @@ var _ = Describe("Verify", func() {
 			)
 
 			Expect(error).NotTo(HaveOccurred())
-			Expect(resp.Verify.Verify).To(Equal(true))
+			Expect(resp.Verify.Verify).To(BeTrue())
 		},
 		Entry("Test case 1", "Opa1@", 5, 1, 1),
 		Entry("Test case 2", "SenhaForte!23", 5, 1, 1),

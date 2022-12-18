@@ -87,3 +87,9 @@ Tendo decidido que usaria o ***Strategy Pattern***, comecei a implementar os str
 Iniciei pela validação que me pareceu mais simples, a `minSize`.
 
 Essa validação consiste em retornar **inválido** para senhas *menores* que o valor fornecido para o `minSize` e retornar **válido** para senhas *maiores* ou de tamanho *igual* ao valor fornecido para `minSize`.
+
+### MinDigitValidationStrategy
+
+As validações de `minDigit` e `minSpecialChars` são relativamente simples, também. As duas podem ser resolvidas facilmente usando **Regex**. Comecei pela de dígitos porque a expressão regular é mais simples.
+
+A validação consiste em encontrar todos as ocorrências de um dígito numérico dentro da senha, retornar *inválido* se o número de ocorrências for *menor* que o valor `minDigit` ou retornar *válido* se o número de ocorrências for *maior* ou igual ao valor `minDigit`.
