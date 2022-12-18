@@ -7,7 +7,8 @@ type MinDigitValidationStrategy struct {
 }
 
 func NewMinDigitValidationStrategy() *MinDigitValidationStrategy {
-	return &MinDigitValidationStrategy{digitRegexp: *regexp.MustCompile(`\d`)}
+	const DIGIT_REGEXP string = `\d`
+	return &MinDigitValidationStrategy{digitRegexp: *regexp.MustCompile(DIGIT_REGEXP)}
 }
 
 func (md *MinDigitValidationStrategy) IsValid(password string, value int) bool {
