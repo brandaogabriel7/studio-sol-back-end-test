@@ -1,4 +1,4 @@
-package src_test
+package integration_tests_test
 
 import (
 	"testing"
@@ -7,7 +7,7 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-func TestSrc(t *testing.T) {
+func TestIntegrationTests(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Src Suite")
+	RunSpecs(t, "IntegrationTests Suite")
 }

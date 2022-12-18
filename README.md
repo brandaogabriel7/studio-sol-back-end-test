@@ -60,4 +60,30 @@ type Query {
 
 ## Configurar ambiente para testes
 
-Antes de começar o desenvolvimento, eu decidi configurar o projeto para utilizar [ginkgo](https://github.com/onsi/ginkgo) e [gomega](https://github.com/onsi/gomega) para os testes e atualizar o pipeline para rodar os testes com a ginkgo CLI.
+Eu resolvi utilizar o [ginkgo](https://github.com/onsi/ginkgo) e o [gomega](https://github.com/onsi/gomega) porque eu gosto da estrutura que eles fornecem para escrita de testes, acho que os testes ficam mais legíveis e organizados, além de mais fáceis de escrever. E, como eu desenvolvo com TDD, usar essas bibliotecas me traz mais produtividade para escrever muitos testes.
+
+> Essas bibliotecas possuem uma sintaxe baseada no BDD, o que vai faicilitar muito o entendimento do que o código faz pela leitura dos testes.
+
+Então, antes de começar o desenvolvimento, eu configurei o projeto e o pipeline para utilizarem a **ginkgo CLI**.
+
+## Implementação das validações
+
+### Testes de integração como base
+
+Meu primeiro passo foi escrever testes de integração que testassem alguns casos da query `verify`, inclusive o caso fornecido na descrição da prova. Depois que eu tivesse os testes de integração falhando, eu seguiria o ciclo do TDD com testes de unidade até que a feature estivesse completa e os testes de integração também passassem.
+
+Escrevi testes de integração parametrizados com as mesmas regras do exemplo da prova (minSize, minSpecialChars, noRepeted, minDigit). Coloquei alguns casos de testes apenas com essas regras para começar. Depois que elas estivessem implementadas eu acrescentaria mais casos de testes de integração para cobrir as outras regras.
+
+### Arquitetura
+
+Uma das minhas primeiras ideias para implementação das validações era usar o padrão [Chain of Responsibility](https://refactoring.guru/design-patterns/chain-of-responsibility). No entanto, também tive a ideia de utilizar o [Strategy Pattern](https://refactoring.guru/design-patterns/strategy) e chamar cada strategy na ordem que aparecesse na coleção de regras da requisição.
+
+A segunda opção me pareceu mais simples, além de me permitir retornar as regras que não fossem cumpridas na mesma ordem que elas viesse na requisição.
+
+### MinDigitValidationStrategy
+
+Tendo decidido que usaria o ***Strategy Pattern***, comecei a implementar os strategies, um por um, sempre seguindo o ciclo do TDD.
+
+Iniciei pela validação que me pareceu mais simples, a `minDigit`.
+
+Essa validação consiste em retornar **inválido** para senhas *menores* que o valor fornecido para o `minDigit` e retornar **válido** para senhas *maiores* ou de tamanho *igual* ao valor fornecido para `minDigit`.
