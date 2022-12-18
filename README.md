@@ -18,6 +18,7 @@ Para facilitar a execução da aplicação e deploy para algum ambiente, resolvi
 
 - golang
 - gqlgen (para facilitar o uso do GraphQL em go)
+- ginkgo e gomega (para testes)
 - Docker
 - Github e Github Actions
 - Heroku e Cloudflare (para deploy da aplicação)
@@ -57,3 +58,6 @@ type Query {
 }
 ```
 
+## Configurar ambiente para testes
+
+Antes de começar o desenvolvimento, eu decidi configurar o projeto para utilizar [ginkgo](https://github.com/onsi/ginkgo) e [gomega](https://github.com/onsi/gomega) para os testes e atualizar o pipeline para rodar os testes com a ginkgo CLI.
