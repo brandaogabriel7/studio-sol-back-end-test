@@ -17,7 +17,7 @@ var _ = Describe("Verify", func() {
 			PasswordValidationService: factories.GetDefaultPasswordValidationService(),
 		}})))
 	
-	Describe("Checking that password follows the specified rules", func ()  {
+	Context("Checking that password follows the specified rules", func ()  {
 		DescribeTable("minSize, minSpecialChars, noRepeted, minDigit",
 			func (password string, minSize int, minSpecialChars int, minDigit int)  {
 				var resp struct {
@@ -53,7 +53,7 @@ var _ = Describe("Verify", func() {
 		)
 	})
 
-	Describe("Checking that password does not follow all the specified rules", func ()  {
+	Context("Checking that password does not follow all the specified rules", func ()  {
 		DescribeTable("The following rules fail:",
 			func (password string, minSize int, minSpecialChars int, minDigit int, noMatch []string)  {
 				var resp struct {

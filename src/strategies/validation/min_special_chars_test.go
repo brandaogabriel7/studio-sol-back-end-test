@@ -10,7 +10,7 @@ import (
 var _ = Describe("MinSpecialChars", func() {
 	minSpecialCharsStrategy := validation.NewMinSpecialCharsValidationStrategy()
 
-	Describe("Check that the password follows minSpecialChars rule", func ()  {
+	Context("Check that the password follows minSpecialChars rule", func ()  {
 		DescribeTable("When password contains more special chars than minSpecialChars value",
 			func (password string, minSpecialChars int)  {
 				isValid := minSpecialCharsStrategy.IsValid(password, minSpecialChars)
@@ -34,7 +34,7 @@ var _ = Describe("MinSpecialChars", func() {
 		)
 	})
 
-	Describe("Check that the password does not follow minSpecialChars rule", func ()  {
+	Context("Check that the password does not follow minSpecialChars rule", func ()  {
 		DescribeTable("When password has less special chars than minSpecialChars value",
 		func (password string, minSpecialChars int)  {
 			isValid := minSpecialCharsStrategy.IsValid(password, minSpecialChars)

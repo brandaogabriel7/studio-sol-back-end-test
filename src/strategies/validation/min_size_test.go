@@ -10,7 +10,7 @@ import (
 var _ = Describe("MinSize", func() {
 	minSizeStrategy := validation.MinSizeValidationStrategy{}
 
-	Describe("Check that the password follows minSize rule", func ()  {
+	Context("Check that the password follows minSize rule", func ()  {
 		DescribeTable("When password length is more than minSize value",
 			func (password string, minSize int)  {
 				isValid := minSizeStrategy.IsValid(password, minSize)
@@ -34,7 +34,7 @@ var _ = Describe("MinSize", func() {
 		)
 	})
 
-	Describe("Check that the password does not follow minSize rule", func ()  {
+	Context("Check that the password does not follow minSize rule", func ()  {
 		DescribeTable("When password length is less than minSize value",
 		func (password string, minSize int)  {
 			isValid := minSizeStrategy.IsValid(password, minSize)

@@ -10,7 +10,7 @@ import (
 var _ = Describe("MinDigit", func() {
 	minDigitStrategy := validation.NewMinDigitValidationStrategy()
 
-	Describe("Check that the password follows minDigit rule", func ()  {
+	Context("Check that the password follows minDigit rule", func ()  {
 		DescribeTable("When password contains more digits than minDigit value",
 			func (password string, minDigit int)  {
 				isValid := minDigitStrategy.IsValid(password, minDigit)
@@ -34,7 +34,7 @@ var _ = Describe("MinDigit", func() {
 		)
 	})
 
-	Describe("Check that the password does not follow minDigit rule", func ()  {
+	Context("Check that the password does not follow minDigit rule", func ()  {
 		DescribeTable("When password has less digits than minDigit value",
 		func (password string, minDigit int)  {
 			isValid := minDigitStrategy.IsValid(password, minDigit)
