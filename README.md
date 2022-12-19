@@ -99,3 +99,16 @@ A expressão regular é: `\d`
 ### MinSpecialChars
 
 A lógica do `minSpecialChars` é a mesma do minDigit, mas a expressão regular é: `[!@#$%^&*()\-+\\\/{}\[\]]`
+
+### NoRepeted
+
+A regra `noRepeted` foge mais da lógica das outras regras. A solução que eu pensei foi a seguinte, comprimir todos os caracteres repetidos consecutivos da senha em um só e comparar o tamanho da senha comprimida com a senha original.
+
+Se a senha comprimida e a senha original forem iguais, a regra passou. Se elas forem diferentes, a regra não passou.
+
+Exemplos:
+- Sucesso: A senha *"abacate123"*, depois de comprimida, continua *"abacate123"*.
+
+- Falha: A senha *"Opaaa73"*, depois de comprimida, vira *"Opa73"* (diferente da original).
+
+
