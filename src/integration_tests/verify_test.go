@@ -6,6 +6,7 @@ import (
 	"github.com/brandaogabriel7/studio-sol-back-end-test/graph"
 	"github.com/brandaogabriel7/studio-sol-back-end-test/graph/model"
 	"github.com/brandaogabriel7/studio-sol-back-end-test/src/factories"
+	"github.com/brandaogabriel7/studio-sol-back-end-test/src/strategies/validation"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
@@ -84,9 +85,9 @@ var _ = Describe("Verify", func() {
 				Expect(resp.Verify.NoMatch).NotTo(BeEmpty())
 				Expect(resp.Verify.NoMatch).To(Equal(noMatch))
 			},
-			Entry("minSize", "0p@", 5, 1, 1, []string{"minSize"}),
-			Entry("minSize, minSpecialChars, minDigit", "SenhaForte!2", 20, 4, 2, []string{"minSize", "minSpecialChars", "minDigit"}),
-			Entry("noRepeted", "aaaaaaa!2", 3, 1, 1, []string{"noRepeted"}),
+			Entry("minSize", "0p@", 5, 1, 1, []string{string(validation.MIN_SIZE)}),
+			Entry("minSize, minSpecialChars, minDigit", "SenhaForte!2", 20, 4, 2, []string{string(validation.MIN_SIZE), string(validation.MIN_SPECIAL_CHARS), string(validation.MIN_DIGIT)}),
+			Entry("noRepeted", "aaaaaaa!2", 3, 1, 1, []string{string(validation.NO_REPETED)}),
 		)
 	})
 })
