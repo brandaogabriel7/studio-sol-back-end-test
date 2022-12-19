@@ -1,13 +1,13 @@
 type Verify {
   verify: Boolean!
-  noMatch: [String]!
+  noMatch: [String!]!
 }
 
 input Rule {
   rule: String!
-  value: Int
+  value: Int!
 }
 
 type Query {
-  verify(password: String!, rules: [Rule]): Verify!
+  verify(password: String!, rules: [Rule!]!): Verify!
 }

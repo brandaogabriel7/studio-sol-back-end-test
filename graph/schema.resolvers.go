@@ -6,14 +6,14 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/brandaogabriel7/studio-sol-back-end-test/graph/model"
 )
 
 // Verify is the resolver for the verify field.
 func (r *queryResolver) Verify(ctx context.Context, password string, rules []*model.Rule) (*model.Verify, error) {
-	panic(fmt.Errorf("not implemented: Verify - verify"))
+	verifyResponse := r.PasswordValidationService.Validate(password, rules)
+	return &verifyResponse, nil
 }
 
 // Query returns QueryResolver implementation.

@@ -21,11 +21,17 @@ jobs:
       - name: Install dependencies
         run: go get .
 
+      - name: Install ginkgo CLI
+        run: |
+          go get github.com/onsi/ginkgo/v2/ginkgo/internal@v2.6.1 \
+          && go get github.com/onsi/ginkgo/v2/ginkgo/generators@v2.6.1 \
+          && go install github.com/onsi/ginkgo/v2/ginkgo
+
       - name: Build
         run: go build -v ./...
 
-      - name: Test with the Go CLI
-        run: go test
+      - name: Run tests with ginkgo CLI
+        run: ginkgo ./...
 
   deploy:
     runs-on: ubuntu-latest
