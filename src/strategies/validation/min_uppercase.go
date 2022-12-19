@@ -2,6 +2,7 @@ package validation
 
 import "regexp"
 
+// Checks that password has at least the minimum number of lower case characters.
 type MinUppercaseValidationStrategy struct{
 	RegexValidation
 }
