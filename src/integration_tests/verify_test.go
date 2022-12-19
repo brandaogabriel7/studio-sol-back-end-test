@@ -82,6 +82,7 @@ var _ = Describe("Verify", func() {
 			},
 			Entry("minSize", "0p@", 5, 1, 1, []string{"minSize"}),
 			Entry("minSize, minDigits, minSpecialChars", "SenhaForte!23", 20, 4, 2, []string{"minSize", "minDigits, minSpecialChars"}),
+			Entry("noRepeted", "aaaaaaa!2", 3, 1, 1, []string{"noRepeted"}),
 		)
 	})
 })
