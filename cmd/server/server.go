@@ -8,6 +8,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/brandaogabriel7/studio-sol-back-end-test/graph"
+	"github.com/brandaogabriel7/studio-sol-back-end-test/src/factories"
 )
 
 const defaultPort = "8080"
@@ -18,7 +19,9 @@ func main() {
 		port = defaultPort
 	}
 
-	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))
+	srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{
+		PasswordValidationService: factories.GetDefaultPasswordValidationService(),
+	}}))
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/graphql"))
 	http.Handle("/graphql", srv)
