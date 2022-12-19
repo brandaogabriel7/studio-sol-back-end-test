@@ -19,6 +19,10 @@
     - [Injetar serviço no *resolver*](#injetar-serviço-no-resolver)
     - [Refatoração das regras com Regex](#refatoração-das-regras-com-regex)
     - [MinUppercaseStrategy e MinLowercaseStrategy](#minuppercasestrategy-e-minlowercasestrategy)
+- [Como testar a aplicação](#como-testar-a-aplicação)
+    - [Localmente](#localmente)
+    - [Dockerfile](#dockerfile)
+    - [Versão hospedada](#versão-hospedada)
 
 ## Introdução
 
@@ -217,3 +221,73 @@ A aplicação também está hospedada, então você pode testá-la nesses links:
 Endpoint graphql: https://studio-sol-back-end-test.gabrielbrandao.net/graphql
 
 Playground GraphQL: https://studio-sol-back-end-test.gabrielbrandao.net
+
+## Alguns casos de teste
+
+Caso 1:
+
+  - Entrada:
+
+    ```gql
+    {
+      verify(
+        password: "ee123&"
+        rules: [{rule: "minSize", value: 8}, {rule: "minSpecialChars", value: 2}, {rule: "noRepeted", value: 0}, {rule: "minDigit", value: 4}, {rule: "minUppercase", value: 7}]
+      ) {
+        verify
+        noMatch
+      }
+    }
+    ```
+
+  - Saída:
+
+    ```json
+    {
+      "data": {
+        "verify": {
+          "verify": false,
+          "noMatch": [
+            "minSize",
+            "minSpecialChars",
+            "noRepeted",
+            "minDigit",
+            "minUppercase"
+          ]
+        }
+      }
+    }
+    ```
+
+Caso 2:
+
+  - Entrada:
+
+    ```gql
+    query {
+      verify(password: "TesteSenhaForte!123&", rules: [
+        {rule: "minSize",value: 8},
+        {rule: "minSpecialChars",value: 2},
+        {rule: "noRepeted",value: 0},
+        {rule: "minDigit",value: 4}
+      ]) {
+      verify
+      noMatch
+      }
+    }
+    ```
+
+  - Saída:
+
+    ```json
+    {
+      "data": {
+        "verify": {
+          "verify": false,
+          "noMatch": [
+            "minDigit"
+          ]
+        }
+      }
+    }
+    ```
