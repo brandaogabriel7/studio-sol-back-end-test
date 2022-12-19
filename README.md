@@ -50,7 +50,7 @@ type Verify {
 
 input Rule {
   rule: String!
-  value: Int
+  value: Int!
 }
 
 type Query {
@@ -111,4 +111,8 @@ Exemplos:
 
 - Falha: A senha *"Opaaa73"*, depois de comprimida, vira *"Opa73"* (diferente da original).
 
+### PasswordValidationService
 
+O `PasswordValidationService` vai ser o serviço responsável por chamar as strategies em ordem e retornar a validação completa para o `resolver` da query **verify**.
+
+Ele recebe um map que atrela os nomes das regras de validação às suas respectivas *estratégias*.

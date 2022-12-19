@@ -11,6 +11,6 @@ func NewMinDigitValidationStrategy() *MinDigitValidationStrategy {
 	return &MinDigitValidationStrategy{digitRegexp: *regexp.MustCompile(DIGIT_REGEXP)}
 }
 
-func (md *MinDigitValidationStrategy) IsValid(password string, value int) bool {
+func (md MinDigitValidationStrategy) IsValid(password string, value int) bool {
 	return len(md.digitRegexp.FindAllString(password, -1)) >= value
 }

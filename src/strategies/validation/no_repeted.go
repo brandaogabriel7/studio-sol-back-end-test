@@ -4,7 +4,7 @@ import "strings"
 
 type NoRepetedStrategy struct {}
 
-func (nr *NoRepetedStrategy) IsValid(password string, _ int) bool {
+func (nr NoRepetedStrategy) IsValid(password string, _ int) bool {
 	compressedPasswordSb := &strings.Builder{}
 	var previous rune
 	for _, r := range password {

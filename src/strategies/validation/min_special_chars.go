@@ -11,6 +11,6 @@ func NewMinSpecialCharsValidationStrategy() *MinSpecialCharsStrategy {
 	return &MinSpecialCharsStrategy{specialCharsRegexp: *regexp.MustCompile(SPECIAL_CHARS_REGEXP)}
 }
 
-func (msc *MinSpecialCharsStrategy) IsValid(password string, value int) bool {
+func (msc MinSpecialCharsStrategy) IsValid(password string, value int) bool {
 	return len(msc.specialCharsRegexp.FindAllString(password, -1)) >= value
 }
