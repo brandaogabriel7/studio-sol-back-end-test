@@ -1,5 +1,25 @@
 # studio-sol-back-end-test
 
+## Sumário
+- [Introdução](#introdução)
+- [Processo](#processo)
+- [Tecnologias e padrões](#tecnologias-e-padrões)
+    - [Lista completa](#lista-completa)
+- [Gerar projeto inicial](#gerar-projeto-inicial)
+- [Criar schema da aplicação](#criar-schema-da-aplicação)
+- [Configurar projeto para testes](#configurar-projeto-para-testes)
+- [Implementação das validações](#implementação-das-validações)
+    - [Testes de integração como base](#testes-de-integração-como-base)
+    - [Arquitetura](#arquitetura)
+    - [MinSizeValidationStrategy](#minsizevalidationstrategy)
+    - [MinDigitValidationStrategy](#mindigitvalidationstrategy)
+    - [MinSpecialCharsValidationStrategy](#minspecialcharsvalidationstrategy)
+    - [NoRepetedValidationStrategy](#norepetedvalidationstrategy)
+    - [PasswordValidationService](#passwordvalidationservice)
+    - [Injetar serviço no *resolver*](#injetar-serviço-no-resolver)
+    - [Refatoração das regras com Regex](#refatoração-das-regras-com-regex)
+    - [MinUppercaseStrategy e MinLowercaseStrategy](#minuppercasestrategy-e-minlowercasestrategy)
+
 ## Introdução
 
 O problema consiste em validar uma senha com base nas regras fornecidas na requisição, depois, retornar se a senha é válida e, se não for, listar quais regras aquela senha fere.
@@ -58,7 +78,7 @@ type Query {
 }
 ```
 
-## Configurar ambiente para testes
+## Configurar projeto para testes
 
 Eu resolvi utilizar o [ginkgo](https://github.com/onsi/ginkgo) e o [gomega](https://github.com/onsi/gomega) porque eu gosto da estrutura que eles fornecem para escrita de testes, acho que os testes ficam mais legíveis e organizados, além de mais fáceis de escrever. E, como eu desenvolvo com TDD, usar essas bibliotecas me traz mais produtividade para escrever muitos testes.
 
@@ -117,11 +137,11 @@ O `PasswordValidationService` vai ser o serviço responsável por chamar as stra
 
 Ele recebe um map que atrela os nomes das regras de validação às suas respectivas *estratégias*.
 
-### Resolver implementado com algumas regras
+### Injetar serviço no *resolver*
 
-Com o serviço de validação implementado, eu fiz a injeção no resolver e coloquei tudo para funcionar.
+Com o serviço de validação implementado, eu fiz a injeção no *resolver* e coloquei tudo para funcionar.
 
-Nesse ponto, todos os testes estavam passando (de integração e de unidade) e eu testei alguns casos manualmente pelo playground da aplicação e tudo funcionou.
+Nesse ponto, todos os testes estavam passando (de integração e de unidade). Eu testei alguns casos manualmente pelo playground da aplicação e tudo funcionou.
 
 Até o momento apenas as regras **minSize**, **minDigit**, **minSpecialChars** e **noRepeted** haviam sido implementadas, mas a estrutura já estava preparada para receber as regras restantes facilmente.
 
@@ -140,3 +160,60 @@ As duas estratégias restantes, *minUppercase* e *minLowerCase* se aproveitam da
 - minLowercase: `[a-z]`
 
 Então, escrevi mais testes de integração que incluíssem essas regras, depois escrevi testes de unidade para implementar cada estratégia e finalizar as implementações das regras.
+
+## Como testar a aplicação
+
+### Localmente
+
+Para executar localmente você precisa ter `go 1.19` instalado.
+
+```bash
+# Navegue até pasta raiz do projeto
+cd <pasta-onde-está-o-projeto>/studio-sol-back-end-test
+
+# Execute a aplicação
+go run cmd/server/server.go
+```
+
+A aplicação decide a porta pela variável de ambiente `PORT`. Caso nenhuma seja fornecida, a porta padrão é a 8080. As rotas são as seguintes:
+
+Endpoint graphql: http://localhost:8080/graphql
+
+Playground GraphQL: http://localhost:8080
+
+> Lembre-se de trocar a porta se tiver fornecido um valor para a variável de ambiente `PORT`.
+
+### Dockerfile
+
+Caso não tenha `go 1.19` instalado, pode ser mais simples utilizar um container para testar.
+
+```bash
+# Navegue até pasta raiz do projeto
+cd <pasta-onde-está-o-projeto>/studio-sol-back-end-test
+
+# Faça o build da imagem
+docker build -t studio-sol-back-end-test .
+
+# Rode o container
+docker run -d -p 8080:8080 --name studio-sol-back-end-test studio-sol-back-end-test
+```
+
+As rotas são as seguintes:
+
+Endpoint graphql: http://localhost:8080/graphql
+
+Playground GraphQL: http://localhost:8080
+
+Você também pode passar outra porta ser usada pela aplicação:
+
+```bash
+docker run -d -e PORT=8000 -p 8080:8000 --name studio-sol-back-end-test studio-sol-back-end-test
+```
+
+### Versão hospedada
+
+A aplicação também está hospedada, então você pode testá-la nesses links:
+
+Endpoint graphql: https://studio-sol-back-end-test.gabrielbrandao.net/graphql
+
+Playground GraphQL: https://studio-sol-back-end-test.gabrielbrandao.net
