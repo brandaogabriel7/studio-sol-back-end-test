@@ -23,6 +23,7 @@
     - [Localmente](#localmente)
     - [Dockerfile](#dockerfile)
     - [Versão hospedada](#versão-hospedada)
+- [Conclusão](#conclusão)
 - [Alguns casos de teste](#alguns-casos-de-teste)
 
 ## Introdução
@@ -54,9 +55,9 @@ Meu primeiro passo foi criar o projeto usando o [gqlgen](https://github.com/99de
 
 Depois que o projeto foi gerado, parti para a criação da `Dockerfile`.
 
-Por último, com o projeto criado e a `Dockerfile` pronta, criei o pipeline com *Github Actions* para automatizar o deploy da aplicação.
+Por último, com o projeto criado e a [Dockerfile pronta](Dockerfile), criei o pipeline com *Github Actions* para automatizar o deploy da aplicação.
 
-Quando a aplicação já estava funcionando no Heroku e o pipeline estava configurado, eu adicionei um domínio customizado usando o **Cloudflare**.
+Quando a aplicação já estava funcionando no Heroku e o [pipeline estava configurado](.github/workflows/pipeline.yaml), eu adicionei um domínio customizado usando o **Cloudflare**.
 
 As rotas ficaram:
 - Playground: https://studio-sol-back-end-test.gabrielbrandao.net
@@ -66,22 +67,7 @@ As rotas ficaram:
 
 O próximo passo foi editar o arquivo `schema.graphqls` para configurar a query `verify` e seus tipos. Depois, o script `generate` da **gqlgen** atualizou os códigos com base no novo esquema graphql.
 
-O schema ficou assim:
-```gql
-type Verify {
-  verify: Boolean!
-  noMatch: [String!]!
-}
-
-input Rule {
-  rule: String!
-  value: Int!
-}
-
-type Query {
-  verify(password: String!, rules: [Rule!]!): Verify!
-}
-```
+Veja o schema [aqui](graph/schema.graphqls).
 
 ## Configurar projeto para testes
 
@@ -97,7 +83,7 @@ Então, antes de começar o desenvolvimento, eu configurei o projeto e o pipelin
 
 Meu primeiro passo foi escrever testes de integração que testassem alguns casos da query `verify`, inclusive o caso fornecido na descrição da prova. Depois que eu tivesse os testes de integração falhando, eu seguiria o ciclo do TDD com testes de unidade até que a feature estivesse completa e os testes de integração também passassem.
 
-Escrevi testes de integração parametrizados com as mesmas regras do exemplo da prova (minSize, minSpecialChars, noRepeted, minDigit). Coloquei alguns casos de testes apenas com essas regras para começar. Depois que elas estivessem implementadas eu acrescentaria mais casos de testes de integração para cobrir as outras regras.
+Escrevi [testes de integração](src/integration_tests/verify_test.go) parametrizados com as mesmas regras do exemplo da prova (minSize, minSpecialChars, noRepeted, minDigit). Coloquei alguns casos de testes apenas com essas regras para começar. Depois que elas estivessem implementadas eu acrescentaria mais casos de testes de integração para cobrir as outras regras.
 
 ### Arquitetura
 
@@ -113,6 +99,8 @@ Iniciei pela validação que me pareceu mais simples, a `minSize`.
 
 Essa validação consiste em retornar **inválido** para senhas *menores* que o valor fornecido para o `minSize` e retornar **válido** para senhas *maiores* ou de tamanho *igual* ao valor fornecido para `minSize`.
 
+> [MinSizeValidationStrategy](src/strategies/validation/min_size.go)
+
 ### MinDigitValidationStrategy
 
 As validações de `minDigit` e `minSpecialChars` são relativamente simples, também. As duas podem ser resolvidas facilmente usando **Regex**. Comecei pela de dígitos porque a expressão regular é mais simples.
@@ -121,9 +109,13 @@ A validação consiste em encontrar todos as ocorrências de um dígito numéric
 
 A expressão regular é: `\d`
 
+> [MinDigitValidationStrategy](src/strategies/validation/min_digit.go)
+
 ### MinSpecialCharsValidationStrategy
 
 A lógica do `minSpecialChars` é a mesma do minDigit, mas a expressão regular é: `[!@#$%^&*()\-+\\\/{}\[\]]`
+
+> [MinSpecialCharsValidationStrategy](src/strategies/validation/min_special_chars.go)
 
 ### NoRepetedValidationStrategy
 
@@ -136,15 +128,19 @@ Exemplos:
 
 - Falha: A senha *"Opaaa73"*, depois de comprimida, vira *"Opa73"* (diferente da original).
 
+> [NoRepetedValidationStrategy](src/strategies/validation/no_repeted.go)
+
 ### PasswordValidationService
 
 O `PasswordValidationService` vai ser o serviço responsável por chamar as strategies em ordem e retornar a validação completa para o `resolver` da query **verify**.
 
 Ele recebe um map que atrela os nomes das regras de validação às suas respectivas *estratégias*.
 
+> [PasswordValidationService](src/services/password_validation/password_validation_service.go)
+
 ### Injetar serviço no *resolver*
 
-Com o serviço de validação implementado, eu fiz a injeção no *resolver* e coloquei tudo para funcionar.
+Com o serviço de validação implementado, eu criei uma [factory](src/factories/password_validation_service_factory.go) para a implementação padrão, fiz a injeção no [resolver](graph/resolver.go) e chamei o serviço no [resolver da query verify](graph/schema.resolvers.go).
 
 Nesse ponto, todos os testes estavam passando (de integração e de unidade). Eu testei alguns casos manualmente pelo playground da aplicação e tudo funcionou.
 
@@ -156,7 +152,7 @@ Olhando as regras que ainda não estavam implementadas e comparando com as lógi
 
 Então, antes de escrever mais testes e implementar as regras novas, eu resolvi refatorar as estratégias de Regex existentes para usar o mesmo código, mudando apenas a expressão regular.
 
-Criei uma struct base com a lógica de validação com base em uma expressão. Depois atualizei as estratégias `minSpecialChars` e `minDigit` para utilizar a implementação, cada uma passando sua própria expressão regular de validação.
+Criei uma [struct base](src/strategies/validation/regex_validation.go) com a lógica de validação com base em uma expressão. Depois atualizei as estratégias `minSpecialChars` e `minDigit` para utilizar a implementação, cada uma passando sua própria expressão regular de validação.
 
 ### MinUppercaseStrategy e MinLowercaseStrategy
 
@@ -165,6 +161,15 @@ As duas estratégias restantes, *minUppercase* e *minLowerCase* se aproveitam da
 - minLowercase: `[a-z]`
 
 Então, escrevi mais testes de integração que incluíssem essas regras, depois escrevi testes de unidade para implementar cada estratégia e finalizar as implementações das regras.
+
+- [MinUppercaseStrategy](src/strategies/validation/min_uppercase.go)
+- [MinLowercaseStrategy](src/strategies/validation/min_lowercase.go)
+
+## Conclusão
+
+Nesse ponto, todas as regras estavam implementadas e todos os testes automatizados e manuais passando.
+
+Nas seções seguintes, você encontra as instruções para rodar a aplicação, assim como alguns casos de teste de exemplo.
 
 ## Como testar a aplicação
 
