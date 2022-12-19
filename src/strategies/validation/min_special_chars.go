@@ -2,6 +2,8 @@ package validation
 
 import "regexp"
 
+// Checks that the password contains at least the minimum number of special chars.
+// The special chars are these: !@#$%^&*()-+\/{}[]
 type MinSpecialCharsStrategy struct {
 	specialCharsRegexp regexp.Regexp
 }

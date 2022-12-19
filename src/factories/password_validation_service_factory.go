@@ -5,6 +5,8 @@ import (
 	"github.com/brandaogabriel7/studio-sol-back-end-test/src/strategies/validation"
 )
 
+// Creates the a PasswordValidation service with the following rule validation strategies:
+// minSize, minSpecialChars, minDigit, noRepeted
 func GetDefaultPasswordValidationService() password_validation.PasswordValidationService {
 	validationStrategies := map[string]validation.ValidationStrategy{
 		string(validation.MIN_SIZE): validation.MinSizeValidationStrategy{},

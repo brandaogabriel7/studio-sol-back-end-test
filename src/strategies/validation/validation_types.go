@@ -1,5 +1,6 @@
 package validation
 
+// ValidationType defines a password validation rule type.
 type ValidationType string
 
 const MIN_SIZE ValidationType = "minSize"

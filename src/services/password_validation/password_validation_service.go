@@ -5,6 +5,7 @@ import (
 	"github.com/brandaogabriel7/studio-sol-back-end-test/src/strategies/validation"
 )
 
+// Checks if the password is valid based on a set of rules.
 type PasswordValidationService struct {
 	strategies map[string]validation.ValidationStrategy
 }

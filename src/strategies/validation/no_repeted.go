@@ -2,6 +2,7 @@ package validation
 
 import "strings"
 
+// Checks that there are no consecutive repeated characters in the given password.
 type NoRepetedStrategy struct {}
 
 func (nr NoRepetedStrategy) IsValid(password string, _ int) bool {

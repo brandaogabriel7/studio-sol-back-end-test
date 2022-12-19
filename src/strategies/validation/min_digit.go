@@ -2,6 +2,7 @@ package validation
 
 import "regexp"
 
+// Checks that the password contains at least the minimum number of digits.
 type MinDigitValidationStrategy struct {
 	digitRegexp regexp.Regexp
 }
