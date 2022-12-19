@@ -297,3 +297,34 @@ Caso 2:
       }
     }
     ```
+
+
+Caso 3:
+
+  - Entrada:
+
+    ```gql
+    query {
+      verify(password: "M!nhaS3nh@", rules: [
+        {rule: "minSize",value: 8},
+        {rule: "minSpecialChars",value: 2},
+        {rule: "minDigit",value: 1}
+      ]) {
+      verify
+      noMatch
+      }
+    }
+    ```
+
+  - Saída:
+
+    ```json
+    {
+      "data": {
+        "verify": {
+          "verify": true,
+          "noMatch": []
+        }
+      }
+    }
+    ```
