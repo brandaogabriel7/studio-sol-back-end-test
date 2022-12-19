@@ -4,7 +4,7 @@ package model
 
 type Rule struct {
 	Rule  string `json:"rule"`
-	Value *int   `json:"value"`
+	Value int    `json:"value"`
 }
 
 type Verify struct {

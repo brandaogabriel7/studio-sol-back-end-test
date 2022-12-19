@@ -54,7 +54,7 @@ var _ = Describe("PasswordValidationService", func() {
 
 			verifyResponse := pvs.Validate(password, rules)
 
-			isValid := len(noMatch) > 0
+			isValid := len(noMatch) == 0
 
 			Expect(verifyResponse.NoMatch).To(Equal(noMatch))
 			Expect(verifyResponse.Verify).To(Equal(isValid))
@@ -62,7 +62,7 @@ var _ = Describe("PasswordValidationService", func() {
 		Entry(
 			"third",
 			"opa",
-			[]model.Rule{
+			[]*model.Rule{
 				{Rule: FIRST_RULE, Value: 3},
 				{Rule: SECOND_RULE, Value: 2},
 				{Rule: THIRD_RULE, Value: 0},
@@ -72,7 +72,7 @@ var _ = Describe("PasswordValidationService", func() {
 		Entry(
 			"first, second",
 			"senhaaa",
-			[]model.Rule{
+			[]*model.Rule{
 				{Rule: FIRST_RULE, Value: 5},
 				{Rule: SECOND_RULE, Value: 7},
 				{Rule: THIRD_RULE, Value: 2},
@@ -82,7 +82,7 @@ var _ = Describe("PasswordValidationService", func() {
 		Entry(
 			"-",
 			"senhaforte",
-			[]model.Rule{
+			[]*model.Rule{
 				{Rule: FIRST_RULE, Value: 0},
 				{Rule: SECOND_RULE, Value: 7},
 				{Rule: THIRD_RULE, Value: 2},

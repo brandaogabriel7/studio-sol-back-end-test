@@ -5,12 +5,16 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/brandaogabriel7/studio-sol-back-end-test/graph"
 	"github.com/brandaogabriel7/studio-sol-back-end-test/graph/model"
+	"github.com/brandaogabriel7/studio-sol-back-end-test/src/factories"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 )
 
 var _ = Describe("Verify", func() {
-	c := client.New(handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}})))
+	c := client.New(handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{
+		Resolvers: &graph.Resolver{
+			PasswordValidationService: factories.GetDefaultPasswordValidationService(),
+		}})))
 	
 	Describe("Checking that password follows the specified rules", func ()  {
 		DescribeTable("minSize, minSpecialChars, noRepeted, minDigit",
@@ -81,7 +85,7 @@ var _ = Describe("Verify", func() {
 				Expect(resp.Verify.NoMatch).To(Equal(noMatch))
 			},
 			Entry("minSize", "0p@", 5, 1, 1, []string{"minSize"}),
-			Entry("minSize, minDigits, minSpecialChars", "SenhaForte!23", 20, 4, 2, []string{"minSize", "minDigits, minSpecialChars"}),
+			Entry("minSize, minSpecialChars, minDigit", "SenhaForte!2", 20, 4, 2, []string{"minSize", "minSpecialChars", "minDigit"}),
 			Entry("noRepeted", "aaaaaaa!2", 3, 1, 1, []string{"noRepeted"}),
 		)
 	})

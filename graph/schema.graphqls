@@ -5,7 +5,7 @@ type Verify {
 
 input Rule {
   rule: String!
-  value: Int
+  value: Int!
 }
 
 type Query {

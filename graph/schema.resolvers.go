@@ -12,7 +12,8 @@ import (
 
 // Verify is the resolver for the verify field.
 func (r *queryResolver) Verify(ctx context.Context, password string, rules []*model.Rule) (*model.Verify, error) {
-	return &model.Verify{Verify: false}, nil
+	verifyResponse := r.PasswordValidationService.Validate(password, rules)
+	return &verifyResponse, nil
 }
 
 // Query returns QueryResolver implementation.

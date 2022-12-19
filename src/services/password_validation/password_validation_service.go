@@ -23,7 +23,7 @@ func (pvs *PasswordValidationService) Validate(password string, rules []*model.R
 			}
 		}
 	}
-	verifyResponse.Verify = len(verifyResponse.NoMatch) > 0
+	verifyResponse.Verify = len(verifyResponse.NoMatch) == 0
 
 	return verifyResponse
 }
