@@ -96,11 +96,11 @@ A validação consiste em encontrar todos as ocorrências de um dígito numéric
 
 A expressão regular é: `\d`
 
-### MinSpecialChars
+### MinSpecialCharsValidationStrategy
 
 A lógica do `minSpecialChars` é a mesma do minDigit, mas a expressão regular é: `[!@#$%^&*()\-+\\\/{}\[\]]`
 
-### NoRepeted
+### NoRepetedValidationStrategy
 
 A regra `noRepeted` foge mais da lógica das outras regras. A solução que eu pensei foi a seguinte, comprimir todos os caracteres repetidos consecutivos da senha em um só e comparar o tamanho da senha comprimida com a senha original.
 
@@ -124,3 +124,19 @@ Com o serviço de validação implementado, eu fiz a injeção no resolver e col
 Nesse ponto, todos os testes estavam passando (de integração e de unidade) e eu testei alguns casos manualmente pelo playground da aplicação e tudo funcionou.
 
 Até o momento apenas as regras **minSize**, **minDigit**, **minSpecialChars** e **noRepeted** haviam sido implementadas, mas a estrutura já estava preparada para receber as regras restantes facilmente.
+
+### Refatoração das regras com Regex
+
+Olhando as regras que ainda não estavam implementadas e comparando com as lógicas de validação de `minDigit` e `minSpecialChars`, eu percebi que elas teriam certo nível de duplicação e uma refatoração podia ser feita para todas as validações que usassem Regex.
+
+Então, antes de escrever mais testes e implementar as regras novas, eu resolvi refatorar as estratégias de Regex existentes para usar o mesmo código, mudando apenas a expressão regular.
+
+Criei uma struct base com a lógica de validação com base em uma expressão. Depois atualizei as estratégias `minSpecialChars` e `minDigit` para utilizar a implementação, cada uma passando sua própria expressão regular de validação.
+
+### MinUppercaseStrategy e MinLowercaseStrategy
+
+As duas estratégias restantes, *minUppercase* e *minLowerCase* se aproveitam da struct base de validação regex, porém cada uma com sua expressão:
+- minUppercase: `[A-Z]`
+- minLowercase: `[a-z]`
+
+Então, escrevi mais testes de integração que incluíssem essas regras, depois escrevi testes de unidade para implementar cada estratégia e finalizar as implementações das regras.
