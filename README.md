@@ -298,7 +298,6 @@ Caso 2:
     }
     ```
 
-
 Caso 3:
 
   - Entrada:
