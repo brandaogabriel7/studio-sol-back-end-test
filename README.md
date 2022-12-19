@@ -116,3 +116,11 @@ Exemplos:
 O `PasswordValidationService` vai ser o serviço responsável por chamar as strategies em ordem e retornar a validação completa para o `resolver` da query **verify**.
 
 Ele recebe um map que atrela os nomes das regras de validação às suas respectivas *estratégias*.
+
+### Resolver implementado com algumas regras
+
+Com o serviço de validação implementado, eu fiz a injeção no resolver e coloquei tudo para funcionar.
+
+Nesse ponto, todos os testes estavam passando (de integração e de unidade) e eu testei alguns casos manualmente pelo playground da aplicação e tudo funcionou.
+
+Até o momento apenas as regras **minSize**, **minDigit**, **minSpecialChars** e **noRepeted** haviam sido implementadas, mas a estrutura já estava preparada para receber as regras restantes facilmente.
