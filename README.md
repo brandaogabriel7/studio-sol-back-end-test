@@ -23,6 +23,7 @@
     - [Localmente](#localmente)
     - [Dockerfile](#dockerfile)
     - [Versão hospedada](#versão-hospedada)
+- [Alguns casos de teste](#alguns-casos-de-teste)
 
 ## Introdução
 
