@@ -13,6 +13,8 @@ func GetDefaultPasswordValidationService() password_validation.PasswordValidatio
 		string(validation.MIN_DIGIT): validation.NewMinDigitValidationStrategy(),
 		string(validation.MIN_SPECIAL_CHARS): validation.NewMinSpecialCharsValidationStrategy(),
 		string(validation.NO_REPETED): validation.NoRepetedStrategy{},
+		string(validation.MIN_UPPERCASE): validation.NewMinUppercaseValidationStrategy(),
+		string(validation.MIN_LOWERCASE): validation.NewMinLowercaseValidationStrategy(),
 	}
 
 	return *password_validation.NewPasswordValidationService(validationStrategies)
