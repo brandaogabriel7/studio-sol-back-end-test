@@ -30,6 +30,21 @@
 
 O problema consiste em validar uma senha com base nas regras fornecidas na requisição, depois, retornar se a senha é válida e, se não for, listar quais regras aquela senha fere.
 
+### Regras possíveis
+
+- minSize: tem pelo menos x caracteres.
+- minUppercase: tem pelo menos x caracteres maiúsculos
+- minLowercase: tem pelo menos x caracteres minúsculos
+- minDigit: tem pelo menos x dígitos (0-9)
+- minSpecialChars: tem pelo menos x caracteres especiais ( Os caracteres especiais são os
+caracteres da seguinte string: "!@#$%^&*()-+\/{}[]" )
+- noRepeted: não tenha nenhum caractere repetido em sequência ( ou seja, "aab" viola esta
+condição, mas "aba" não)
+
+Com exceção da *noRepeted*, todas as regras tem um valor numérico para indicar a ocorrência mínima do que a regra valida. O *noRepeted* sempre recebe o valor `0`. Se outro valor for passado, não mudará o comportamento.
+
+Na seção [Alguns casos de teste](#alguns-casos-de-teste) você pode ver alguns exemplos de requisições e o que elas devem retornar.
+
 ## Processo
 
 Abaixo está descrito meu processo, desde a decisão das tecnologias e padrões, passando pelo raciocínio dos problemas até a solução final.
