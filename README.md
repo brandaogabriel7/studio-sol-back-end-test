@@ -2,6 +2,7 @@
 
 ## Sumário
 - [Introdução](#introdução)
+    - [Regras possíveis](#regras-possíveis)
 - [Processo](#processo)
 - [Tecnologias e padrões](#tecnologias-e-padrões)
     - [Lista completa](#lista-completa)
@@ -36,8 +37,8 @@ O problema consiste em validar uma senha com base nas regras fornecidas na requi
 - minUppercase: tem pelo menos x caracteres maiúsculos
 - minLowercase: tem pelo menos x caracteres minúsculos
 - minDigit: tem pelo menos x dígitos (0-9)
-- minSpecialChars: tem pelo menos x caracteres especiais ( Os caracteres especiais são os
-caracteres da seguinte string: "!@#$%^&*()-+\/{}[]" )
+- minSpecialChars: tem pelo menos x caracteres especiais (Os caracteres especiais são os
+caracteres da seguinte string: `!@#$%^&*()-+\/{}[]`)
 - noRepeted: não tenha nenhum caractere repetido em sequência ( ou seja, "aab" viola esta
 condição, mas "aba" não)
 
