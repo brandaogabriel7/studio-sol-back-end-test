@@ -19,7 +19,7 @@ var _ = Describe("Verify", func() {
 	
 	Context("Checking that password follows the specified rules", func ()  {
 		DescribeTable("minSize, minSpecialChars, noRepeted, minDigit",
-			func (password string, minSize int, minSpecialChars int, minDigit int)  {
+			func (password string, minSize, minSpecialChars, minDigit int)  {
 				var resp struct {
 					Verify model.Verify
 				}
@@ -53,7 +53,7 @@ var _ = Describe("Verify", func() {
 		)
 
 		DescribeTable("minUppercase, minLowercase, minDigit",
-			func (password string, minUppercase int, minLowercase int, minDigit int)  {
+			func (password string, minUppercase, minLowercase, minDigit int)  {
 				var resp struct {
 					Verify model.Verify
 				}
@@ -88,7 +88,7 @@ var _ = Describe("Verify", func() {
 
 	Context("Checking that password does not follow all the specified rules", func ()  {
 		DescribeTable("The following rules fail:",
-			func (password string, minSize int, minSpecialChars int, minDigit int, minUppercase int, minLowercase int, noMatch []string)  {
+			func (password string, minSize, minSpecialChars, minDigit, minUppercase, minLowercase int, noMatch []string)  {
 				var resp struct {
 					Verify model.Verify
 				}
