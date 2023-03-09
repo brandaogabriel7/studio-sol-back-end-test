@@ -236,7 +236,7 @@ Você também pode passar outra porta ser usada pela aplicação:
 docker run -d -e PORT=8000 -p 8080:8000 --name studio-sol-back-end-test studio-sol-back-end-test
 ```
 
-### Versão hospedada
+### Versão hospedada (FORA DO AR)
 
 A aplicação também está hospedada, então você pode testá-la nesses links:
 
